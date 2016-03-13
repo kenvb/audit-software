@@ -9,6 +9,7 @@ $Pingtest= Test-NetConnection $computer.Name
     write-host $pingtest.PingSucceeded
     invoke-command -ComputerName $computer.name -ScriptBlock{
     Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* <# | Where-Object {$_.Publisher -eq "Microsoft Corporation"} #> | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate
+    Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* <# | Where-Object {$_.Publisher -eq "Microsoft Corporation"} #> | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate
     }
     }
     else
@@ -17,4 +18,4 @@ $Pingtest= Test-NetConnection $computer.Name
     write-host $pingtest.PingSucceeded
     }
 }
-$result | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate,PSComputerName | Export-Csv C:\drivers\export.csv
+$result | where-object {$_.Displayname.length -gt 0} | Select-Object PSComputerName, DisplayName, Publisher, DisplayVersion, InstallDate | Export-Csv C:\drivers\export.csv -NoTypeInformation
