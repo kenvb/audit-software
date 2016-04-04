@@ -1,4 +1,5 @@
 ﻿<#
+#Requires -Version 4.0
 .SYNOPSIS
 A simple script to check for installed software on computers in an AD environment. Results will be exported to a csv-file, offline computers to a txt-file.
 Offline computers are determined by a connection test to the WINRM port. Beware of the firewall.
